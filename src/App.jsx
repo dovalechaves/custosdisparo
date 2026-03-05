@@ -133,7 +133,10 @@ const MONTHS = [
 function monthRange(year, month) {
   // month: 1-12. Retorna { since: 'YYYY-MM-DD', until: 'YYYY-MM-DD' }
   const since = dayjs(`${year}-${String(month).padStart(2, '0')}-01`);
-  const until = since.endOf('month');
+  const endOfMonth = since.endOf('month');
+  const today = dayjs();
+  // A API da Meta rejeita datas futuras — limita ao dia de hoje se o mês ainda não terminou
+  const until = endOfMonth.isAfter(today) ? today : endOfMonth;
   return { since: since.format('YYYY-MM-DD'), until: until.format('YYYY-MM-DD') };
 }
 
