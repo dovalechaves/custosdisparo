@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: custodisparo-api
+    restart: unless-stopped
+    expose:
+      - "3001"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: custodisparo-web
+    restart: unless-stopped
+    ports:
+      - "4949:4949"
+    depends_on:
+      - backend
